@@ -1,0 +1,779 @@
+{
+	"info": {
+		"_postman_id": "3d946b1f-34fd-4482-8808-ca39b338fca3",
+		"name": "Tuba APIS (Agent User)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30218718"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "profile",
+					"item": [
+						{
+							"name": "My Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{super_app_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{super_app_url}}/myprofile",
+									"host": [
+										"{{super_app_url}}"
+									],
+									"path": [
+										"myprofile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Profile Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{super_app_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Zeeshan Developer",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "zeeshan@gmai.com",
+											"type": "text"
+										},
+										{
+											"key": "profile_picture",
+											"type": "file",
+											"src": "/C:/Users/Ateeb Nisar/Downloads/205e460b479e2e5b48aec07710c08d50.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{super_app_url}}/myprofile-update",
+									"host": [
+										"{{super_app_url}}"
+									],
+									"path": [
+										"myprofile-update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Properties",
+					"item": [
+						{
+							"name": "Listing",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : 2\r\n    // \"property_status\" : \"buy\", // buy, rent, sold_out\r\n    // \"property_rooms\" : 10,\r\n    // \"bathrooms\" : 1, // equal or greater\r\n    // \"min_price\": 90847,\r\n    // \"max_price\": 90847,\r\n    // \"min_year_built\": 1989,\r\n    // \"max_year_built\": 1989,\r\n    // \"min_property_area\": 100 ,\r\n    // \"max_property_area\": 1000 \r\n    // \"property_title\": \"doloribus quod\",\r\n    // \"property_type\" : []\r\n\r\n    // 0 => 'Draft',\r\n    // 1 => 'Pending',\r\n    // 2 => 'Active',\r\n    // 3 => 'Canceled',\r\n    // 4 => 'Expired',\r\n    // 5 => 'Rejected',\r\n    // 6 => 'Sold',\r\n}"
+								},
+								"url": {
+									"raw": "{{super_app_url}}/properties",
+									"host": [
+										"{{super_app_url}}"
+									],
+									"path": [
+										"properties"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>Agent Active Package</th>\r",
+											"        <th>Package Details</th>\r",
+											"        <th>Agent Ad Validator Info</th>\r",
+											"        <th>Countries</th>\r",
+											"        <th>Regions</th>\r",
+											"        <th>Cities</th>\r",
+											"        <th>Districts</th>\r",
+											"    </tr>\r",
+											"    <tr>\r",
+											"        <td>{{response.data.agentActivePackage}}</td>\r",
+											"        <td>{{response.data.package_detials.pcakage_detials.package_id}}</td>\r",
+											"        <td>{{response.data.agentAdValidatorInfo.advertiserId}}</td>\r",
+											"        <td>{{response.countries}}</td>\r",
+											"        <td>{{response.regions}}</td>\r",
+											"        <td>{{response.cities}}</td>\r",
+											"        <td>{{response.districts}}</td>\r",
+											"    </tr>\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    var res = pm.response.json();\r",
+											"\r",
+											"    var visualizerData = {\r",
+											"        data: {\r",
+											"            agentActivePackage: res.data.agentActivePackage,\r",
+											"            package_detials: res.data.package_detials.pcakage_detials.package_id,\r",
+											"            agentAdValidatorInfo: res.data.agentAdValidatorInfo.advertiserId,\r",
+											"        },\r",
+											"        countries: res.countries,\r",
+											"        regions: res.regions,\r",
+											"        cities: res.cities,\r",
+											"        districts: res.districts\r",
+											"    };\r",
+											"\r",
+											"    return {response: visualizerData};\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : 2\r\n    // \"property_status\" : \"buy\", // buy, rent, sold_out\r\n    // \"property_rooms\" : 10,\r\n    // \"bathrooms\" : 1, // equal or greater\r\n    // \"min_price\": 90847,\r\n    // \"max_price\": 90847,\r\n    // \"min_year_built\": 1989,\r\n    // \"max_year_built\": 1989,\r\n    // \"min_property_area\": 100 ,\r\n    // \"max_property_area\": 1000 \r\n    // \"property_title\": \"doloribus quod\",\r\n    // \"property_type\" : []\r\n\r\n    // 0 => 'Draft',\r\n    // 1 => 'Pending',\r\n    // 2 => 'Active',\r\n    // 3 => 'Canceled',\r\n    // 4 => 'Expired',\r\n    // 5 => 'Rejected',\r\n    // 6 => 'Sold',\r\n}"
+								},
+								"url": {
+									"raw": "{{super_app_url}}/properties/create",
+									"host": [
+										"{{super_app_url}}"
+									],
+									"path": [
+										"properties",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Single Property",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : 2\r\n    // \"property_status\" : \"buy\", // buy, rent, sold_out\r\n    // \"property_rooms\" : 10,\r\n    // \"bathrooms\" : 1, // equal or greater\r\n    // \"min_price\": 90847,\r\n    // \"max_price\": 90847,\r\n    // \"min_year_built\": 1989,\r\n    // \"max_year_built\": 1989,\r\n    // \"min_property_area\": 100 ,\r\n    // \"max_property_area\": 1000 \r\n    // \"property_title\": \"doloribus quod\",\r\n    // \"property_type\" : []\r\n\r\n    // 0 => 'Draft',\r\n    // 1 => 'Pending',\r\n    // 2 => 'Active',\r\n    // 3 => 'Canceled',\r\n    // 4 => 'Expired',\r\n    // 5 => 'Rejected',\r\n    // 6 => 'Sold',\r\n}"
+								},
+								"url": {
+									"raw": "{{super_app_url}}/properties/7",
+									"host": [
+										"{{super_app_url}}"
+									],
+									"path": [
+										"properties",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Advertisement Validator Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ad_license_number",
+									"value": "72002389232",
+									"type": "text"
+								},
+								{
+									"key": "cr_number",
+									"value": "70214950511",
+									"description": "for if agent type is company",
+									"type": "text"
+								},
+								{
+									"key": "national_id",
+									"value": "",
+									"description": "for if agent type is individual",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{super_app_url}}/advertisement-validator-store",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"advertisement-validator-store"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "No Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "appversion",
+								"value": "3.0.5"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "zeeshan",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "966561241273",
+									"type": "text"
+								},
+								{
+									"key": "agent_type",
+									"value": "company",
+									"description": "company or individual",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "company name",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{super_app_url}}/register",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "appversion",
+								"value": "3.0.5"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile_number",
+									"value": "966555555558",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{super_app_url}}/login",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{super_app_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{super_app_url}}/logout",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Two Factor Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "code",
+									"value": "7788",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "966555555558",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{super_app_url}}/2fa-verify",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"2fa-verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Two Factor Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile_number",
+									"value": "966561241273",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{super_app_url}}/resend-2fa-code",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"resend-2fa-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_number\" : \"966561241273\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{super_app_url}}/delete/profile",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"delete",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recover Deleted Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_number\" : \"966561241273\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{super_app_url}}/restore/profile",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"restore",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permenent Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_number\" : \"966561241273\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{super_app_url}}/delete/permenent/profile",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"delete",
+								"permenent",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Packages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{super_app_url}}/packages?package_duration=1 year",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"packages"
+							],
+							"query": [
+								{
+									"key": "package_duration",
+									"value": "1 year",
+									"description": "1 year / 6 months"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "License Packages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{super_app_url}}/license-packages",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"license-packages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Packages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{super_app_url}}/single-packages",
+							"host": [
+								"{{super_app_url}}"
+							],
+							"path": [
+								"single-packages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{super_app_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "super_app_url",
+			"value": "https://stage.tuba.com.sa/api/agent",
+			"type": "string"
+		},
+		{
+			"key": "super_app_token",
+			"value": "195|k72Hj9PiXcWriI4R4xlS6nB09WY3iR8KcmD45NPBbd9d7d72\n",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "super_app_url",
+			"value": "https://stage.tuba.com.sa/api/agent",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "super_app_token",
+			"value": "187|4WP3AsD4aWmr6ksET5ZfORz6ZRsC7wwIdBuntW9nfe274558",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "super_app_url",
+			"value": "http://127.0.0.1:8000/api/agent",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "super_app_token",
+			"value": "92|Ka5fCue52CEsB1Zguy4TPtLT75t1lGvN6tJGpeGWc83abe16",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
